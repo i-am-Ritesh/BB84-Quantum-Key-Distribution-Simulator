@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BB84 Quantum Key Distribution Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <!-- ================= HEADER ================= -->
+    <header>
+        <h1>BB84 Quantum Key Distribution Simulator</h1>
+        <p>
+            Secure Quantum Key Distribution using the BB84 Protocol implemented in Qiskit
+        </p>
+    </header>
+    <!-- ================= CONTROL PANEL ================= -->
+    <section class="card">
+        <h2>Simulation Controls</h2>
+        <div class="controls">
+            <div class="control">
+                <label for="numBits">
+                    Number of Qubits
+                </label>
+                <input
+                        type="number"
+                        id="numBits"
+                        min="4"
+                        max="1024"
+                        value="32">
+            </div>
+            <div class="control">
+                <label for="noise">
+                    Channel Noise
+                </label>
+                <input
+                        type="range"
+                        id="noise"
+                        min="0"
+                        max="0.20"
+                        step="0.01"
+                        value="0">
+                <span id="noiseValue">
+                    0 %
+                </span>
+            </div>
+            <div class="control">
+                <label>
+                    Eve Attack
+                </label>
+                <input
+                        type="checkbox"
+                        id="eve">
+            </div>
+        </div>
+        <button id="simulateButton">
+            Run Simulation
+        </button>
+    </section>
+    <!-- ================= STATISTICS ================= -->
+    <section class="card">
+        <h2>Simulation Statistics</h2>
+        <table class="statsTable">
+            <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Secret Key Length</td>
+                <td id="keyLength">-</td>
+            </tr>
+            <tr>
+                <td>QBER</td>
+                <td id="qber">-</td>
+            </tr>
+            <tr>
+                <td>Eve Enabled</td>
+                <td id="eveStatus">No</td>
+            </tr>
+            <tr>
+                <td>Noise Probability</td>
+                <td id="noiseDisplay">0</td>
+            </tr>
+        </table>
+    </section>
+    <!-- ================= ALICE ================= -->
+    <section class="card">
+        <h2>Alice</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Random Bits</th>
+                <th>Random Bases</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td id="aliceBits"></td>
+                <td id="aliceBases"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <!-- ================= BOB ================= -->
+    <section class="card">
+        <h2>Bob</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Measurement Bases</th>
+                <th>Measured Bits</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td id="bobBases"></td>
+                <td id="bobBits"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <!-- ================= EVE ================= -->
+    <section class="card">
+        <h2>Eve (Intercept-Resend)</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Eve Bases</th>
+                <th>Eve Measurements</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td id="eveBases"></td>
+                <td id="eveBits"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <!-- ================= SIFTED KEYS ================= -->
+    <section class="card">
+        <h2>Sifted Keys</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Alice Sifted Key</th>
+                <th>Bob Sifted Key</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td id="siftAlice"></td>
+                <td id="siftBob"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <!-- ================= SECRET KEY ================= -->
+    <section class="card">
+        <h2>Final Secret Key</h2>
+        <div
+                id="secretKey"
+                class="secretKey">
+        </div>
+    </section>
+    <!-- ================= LOG ================= -->
+    <section class="card">
+        <h2>Simulation Log</h2>
+        <textarea
+                id="log"
+                rows="12"
+                readonly>
+Waiting for simulation...
+        </textarea>
+    </section>
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <p>
+            BB84 Quantum Key Distribution Simulator using Qiskit + Flask + HTML/CSS/JavaScript
+        </p>
+    </footer>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
